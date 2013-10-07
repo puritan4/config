@@ -1,0 +1,89 @@
+XTerm*termName: xterm-256color
+XTerm*iconName:Terminal
+XTerm*eightBitInput:	false
+XTerm*cursorBlink:	true
+XTerm*faceName:	DejaVu Sans Mono
+XTerm*cursorOffTime:	300
+XTerm*metaSendsEscape:	true
+XTerm*faceSize:	11
+XTerm*title:	Terminal
+XTerm*cursorOnTime:	300
+XTerm*utf8:	1
+XTerm*geometry:	110x31
+XTerm*cursorUnderLine:	true
+XTerm*rightScrollBar: false
+XTerm*scrollBar: false
+
+XTerm*background: #1c1c1c
+XTerm*foreground: #ffffff
+XTerm*color0: #464444
+XTerm*color1: #EF3460
+XTerm*color2: #BDEF34
+XTerm*color3: #EFC334
+XTerm*color4: #34BDEF
+XTerm*color5: #B300FF
+XTerm*color6: #3DD8FF
+XTerm*color7: #FFFFFF
+XTerm*color8: #8a8888
+XTerm*color9: #F25A7D
+XTerm*color10: #DCF692
+XTerm*color11: #F6DF92
+XTerm*color12: #92AAF6
+XTerm*color13: #DF92F6
+XTerm*color14: #5AF2CE
+XTerm*color15: #FFFFFF
+XTerm*cursorColor: yellow
+
+XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
+
+Xft.antialias: 1
+Xft.autohint: 0
+Xft.dpi: 96
+Xft.hinting: 1
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
+Xft.rgba: rgb
+
+URxvt*saveLines: 200000
+
+URxvt*font: xft:DejaVu Sans Mono:pixelsize=14:antialias=true:hinting=true
+URxvt*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=14:antialias=true:hinting=true
+URxvt*italicFont: xft:DejaVu Sans Mono:italic:pixelsize=14:antialias=true:hinting=true
+URxvt*italicBoldFont: xft:DejaVu Sans Mono:italicBold:pixelsize=14:antialias=true:hinting=true
+
+URxvt*background: #1c1c1c
+URxvt*foreground: #ffffff
+URxvt*color0: #464444
+URxvt*color1: #EF3460
+URxvt*color2: #BDEF34
+URxvt*color3: #EFC334
+URxvt*color4: #34BDEF
+URxvt*color5: #B300FF
+URxvt*color6: #3DD8FF
+URxvt*color7: #FFFFFF
+URxvt*color8: #8a8888
+URxvt*color9: #F25A7D
+URxvt*color10: #DCF692
+URxvt*color11: #F6DF92
+URxvt*color12: #92AAF6
+URxvt*color13: #DF92F6
+URxvt*color14: #5AF2CE
+URxvt*color15: #FFFFFF
+URxvt*cursorColor: yellow
+
+URxvt.urgentOnBell: true
+URxvt*scrollBar: false
+URxvt.buffered:             true
+URxvt.scrollTtyKeypress:    true
+URxvt.scrollTtyOutput:      false
+URxvt.mouseWheelScrollPage: false
+URxvt.scrollWithBuffer:     true
+URxvt.scrollstyle:          xterm
+URxvt.jumpScroll:           false
+ 
+URxvt.perl-ext-common: default,matcher
+ 
+URxvt.url-launcher:      /usr/bin/google-chrome
+URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt.matcher.button:   1
+
