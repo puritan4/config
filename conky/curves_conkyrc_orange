@@ -1,0 +1,103 @@
+#==============================================================================
+#                               conkyrc_orange
+#
+#  author  : SLK
+#  version : v2011011601
+#  license : Distributed under the terms of GNU GPL version 2 or later
+#
+#==============================================================================
+
+#background yes
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+temperature_unit celsius
+
+double_buffer yes
+no_buffers yes
+text_buffer_size 4096
+
+gap_x 10
+gap_y 130
+minimum_size 190 850
+maximum_width 300
+own_window yes
+own_window_type desktop
+#own_window_type override
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+#### settings required for XFCE!! ####
+##### make sure composing is turned on! ####
+##### Menu -> Settings -> Window Manager Tweaks -> Compositor ####
+own_window_argb_visual yes
+own_window_argb_value 100
+#####
+
+border_inner_margin 0
+border_outer_margin 0
+alignment tl
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+override_utf8_locale yes
+use_xft yes
+xftfont caviar dreams:size=8
+xftalpha 0.5
+uppercase no
+
+default_color FFFFFF
+color1 DDDDDD
+color2 AAAAAA
+color3 888888
+color4 EF5A29
+
+lua_load /home/sleslie/.config/conky/curves_conky_orange.lua
+lua_draw_hook_post main
+
+TEXT
+${voffset 35}
+${goto 95}${color4}${font ubuntu:size=20}${time %e}${color1}${offset -50}${font ubuntu:size=18}${time %A}
+${goto 85}${color2}${voffset -2}${font ubuntu:size=18}${time %b}${voffset -2} ${color3}${font ubuntu:size=20}${time %Y}${font}
+
+${voffset 60}
+${goto 125}${font ubuntu:size=20}${color3}${freq}${font}
+${voffset -12}
+${goto 90}${font Ubuntu:size=12,weight:bold}${color}CPU
+${goto 90}${font Ubuntu:size=12,weight:normal}${color1}${top name 1}${alignr}${top cpu 1}%
+${goto 90}${font Ubuntu:size=12,weight:normal}${color2}${top name 2}${alignr}${top cpu 2}%
+${goto 90}${font Ubuntu:size=12,weight:normal}${color3}${top name 3}${alignr}${top cpu 3}%
+
+${goto 90}${voffset -10}${font Ubuntu:size=12,weight:normal}${color}${threads} process 
+
+${voffset 20}
+${goto 90}${font Ubuntu:size=12,weight:bold}${color}MEM
+${goto 90}${font Ubuntu:size=12,weight:normal}${color1}${top_mem name 1}${alignr}${top_mem mem 1}%
+${goto 90}${font Ubuntu:size=12,weight:normal}${color2}${top_mem name 2}${alignr}${top_mem mem 2}%
+${goto 90}${font Ubuntu:size=12,weight:normal}${color3}${top_mem name 3}${alignr}${top_mem mem 3}%
+
+${if_match ${battery_percent} <= 98}${voffset 28}${goto 90}${font Ubuntu:size=12,weight:bold}${color}DISKS ${voffset -8}${goto 140}BATTERY
+${goto 142}${color3}${battery_time}${voffset 1}${endif}
+${if_match ${battery_percent} >= 99}${voffset 19}${goto 90}${font Ubuntu:size=12,weight:bold}${color}DISKS ${voffset -4}${goto 140}BATTERY${voffset 18}${endif}
+#${goto 90}${diskiograph 30,100 666666 666666}${voffset -30}
+
+
+#${goto 90}${font Ubuntu:size=7,weight:normal}${color}used: ${fs_used /home} /home
+#
+#${goto 90}${font Ubuntu:size=7,weight:normal}${color}used: ${fs_used /} /
+#
+${goto 50}${font Ubuntu:size=12,weight:normal}${color3}Hostname:$alignr$nodename_short
+${goto 50}Username:$alignr${pre_exec whoami}
+${goto 50}Uptime: $alignr$uptime
+${goto 50}Kernel:$alignr$kernel
+
+${goto 50}Burke VA, US $alignr${tztime US/Eastern %H:%M}
+${goto 50}Austin, US $alignr${tztime US/Central %H:%M}
+${goto 50}Sao Paolo, BR $alignr${tztime Brazil/East %H:%M}
+${goto 50}Noida, IN $alignr${tztime Asia/Calcutta %H:%M}
+${goto 50}Singapore, SG $alignr${tztime Asia/Singapore %H:%M}

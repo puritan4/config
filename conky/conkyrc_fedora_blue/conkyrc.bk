@@ -18,13 +18,9 @@ temperature_unit fahrenheit
 # Window specifications #
 
 own_window yes
-own_window_class Conky
-own_window_type normal
-# own_window_type override
+own_window_type override
 own_window_transparent yes
 own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
-own_window_argb_visual yes
-own_window_argb_value 0
 
 border_inner_margin 0
 border_outer_margin 0
@@ -92,9 +88,6 @@ ${color 0066FF}${font caviar dreams:size=8}IP: ${color FFFFFF}${addrs wlan0}
 ${color 0066FF}${font caviar dreams:size=8}ExIP: ${color FFFFFF}${execi 3600 wget -O - http://ip.tupeux.com | tail}
 ${color 0066FF}${font caviar dreams:size=8}VPN: ${color FFFFFF}${if_match ${addr tun0} != "0.0.0.0"} ${addrs vpn0} ${else} ${addr tun0} ${endif}
 
-${color 0066FF}${font caviar dreams:size=8}Austin, US ${color FFFFFF}$alignr${tztime US/Central %H:%M}
-${color 0066FF}${font caviar dreams:size=8}San Jose, US ${color FFFFFF}$alignr${tztime US/Pacific %H:%M}
-${color 0066FF}${font caviar dreams:size=8}Sao Paolo, BR ${color FFFFFF}$alignr${tztime Brazil/East %H:%M}
-${color 0066FF}${font caviar dreams:size=8}Bangalore, IN ${color FFFFFF}$alignr${tztime Asia/Calcutta %H:%M}
-${color 0066FF}${font caviar dreams:size=8}Singapore, SG${color FFFFFF}$alignr${tztime Asia/Singapore %H:%M}
-
+${color 0066FF}${font caviar dreams:size=8}${pre_exec cat /etc/redhat-release | awk '{print $1 " " $2 " " $3 " " $4 " " $5 " " $7}'}
+${color 0066FF}${font caviar dreams:size=8}$machine
+${color 0066FF}${font caviar dreams:size=8}Kernel: ${kernel}

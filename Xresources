@@ -13,6 +13,10 @@ XTerm*geometry:	110x31
 XTerm*cursorUnderLine:	true
 XTerm*rightScrollBar: false
 XTerm*scrollBar: false
+XTerm*font: xft:DejaVu Sans Mono:pixelsize=14:antialias=true:hinting=true
+XTerm*boldFont: xft:DejaVu Sans Mono:bold:pixelsize=14:antialias=true:hinting=true
+XTerm*italicFont: xft:DejaVu Sans Mono:italic:pixelsize=14:antialias=true:hinting=true
+XTerm*italicBoldFont: xft:DejaVu Sans Mono:italicBold:pixelsize=14:antialias=true:hinting=true
 
 XTerm*background: #1c1c1c
 XTerm*foreground: #ffffff
@@ -44,6 +48,7 @@ Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 
+URxvt*termName: xterm-256color
 URxvt*saveLines: 200000
 
 URxvt*font: xft:DejaVu Sans Mono:pixelsize=14:antialias=true:hinting=true
@@ -71,19 +76,19 @@ URxvt*color14: #5AF2CE
 URxvt*color15: #FFFFFF
 URxvt*cursorColor: yellow
 
-URxvt.urgentOnBell: true
+URxvt.urgentOnBell: false
 URxvt*scrollBar: false
 URxvt.buffered:             true
 URxvt.scrollTtyKeypress:    true
 URxvt.scrollTtyOutput:      false
 URxvt.mouseWheelScrollPage: false
 URxvt.scrollWithBuffer:     true
-URxvt.scrollstyle:          xterm
+URxvt.scrollstyle:          rxvt
 URxvt.jumpScroll:           false
  
 URxvt.perl-ext-common: default,matcher
  
-URxvt.url-launcher:      /usr/bin/google-chrome
+URxvt.url-launcher:      /usr/bin/ibm-mozilla-firefox
 URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt.matcher.button:   1
 
