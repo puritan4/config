@@ -37,11 +37,12 @@ source $ZSH/oh-my-zsh.sh
 #export GOPATH=~/go
 export LYNX_CFG=~/lynx.cfg
 export GRAILS_HOME=/home/sleslie/dev/grails-2.3.0
+export SCALA_HOME=/home/sleslie/dev/scala-2.10.3
 export GROOVY_HOME=/opt/groovy-2.0.5
 export JAVA_HOME=/opt/ibm/java-i386-60
 export IWD_WORKSPACE_DIR=~/src/scaws_3.1.0.5
 export ZERO_HOME=${IWD_WORKSPACE_DIR}/build/cache/zerocli
-export PATH=$HOME/.rbenv/bin:$JAVA_HOME/jre/bin:$GROOVY_HOME/bin:/home/sleslie/dev/apache-maven-3.0.5/bin:/home/sleslie/dev:$ZERO_HOME:/home/sleslie/bin:/usr/lib/lightdm/lightdm:/usr/local/lib:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/sleslie/dev/play-2.1.3/:$GRAILS_HOME/bin:
+export PATH=$HOME/.rbenv/bin:$JAVA_HOME/jre/bin:$SCALA_HOME/bin:$GROOVY_HOME/bin:/home/sleslie/dev/apache-maven-3.0.5/bin:/home/sleslie/dev:$ZERO_HOME:/home/sleslie/bin:/usr/lib/lightdm/lightdm:/usr/local/lib:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/sleslie/dev/play-2.1.3/:$GRAILS_HOME/bin:
 
 eval "$(rbenv init -)"
 
@@ -61,6 +62,9 @@ alias vim="gvim -v"
 alias :e="gvim -v"
 alias :q="exit"
 
+# Set the default editor in ranger to use gvim
+alias ranger="EDITOR=gvim ranger"
+
 # easy access to common dirs
 alias dcs="cd /home/sleslie/Documents"
 alias down="cd /home/sleslie/Downloads"
@@ -72,7 +76,6 @@ alias s35="cd /home/sleslie/src/scaws_3.1.0.5; ls"
 alias hve="cd ~/src/hve_images; ls"
 alias icon="cd /home/sleslie/src/icon; ls"
 alias blue="cd /home/sleslie/src/bluemixV2; ls"
-alias bv2="cd /home/sleslie/src/bluemixV2; ls"
 
 # make it easier to work with git.  All these match the values in ~/.vim/vimrc
 alias gs="git status"
