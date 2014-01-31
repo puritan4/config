@@ -17,4 +17,10 @@ elif [ ! -z $1 ] ; then
         LOCCOD=$1
 fi
 
-curl -s http://rss.accuweather.com/rss/liveweather_rss.asp\?metric\=${METRIC}\&locCode\=$LOCCOD | perl -ne 'if (/Currently/) {chomp;/\<title\>Currently: (.*)?\<\/title\>/; print "$1"; }'
+#curl -s http://rss.accuweather.com/rss/liveweather_rss.asp\?metric\=${METRIC}\&locCode\=$LOCCOD | perl -ne 'if (/Currently/) {chomp;/\<title\>Currently: (.*)?\<\/title\>/; print "$1"; }'
+F=`curl -s http://rss.accuweather.com/rss/liveweather_rss.asp\?metric\=0\&locCode\=$LOCCOD | perl -ne 'if (/Currently/) {chomp;/\<title\>Currently: (.*)?\<\/title\>/; print "$1"; }'`
+C=`curl -s http://rss.accuweather.com/rss/liveweather_rss.asp\?metric\=1\&locCode\=$LOCCOD | perl -ne 'if (/Currently/) {chomp;/\<title\>Currently: (.*)?\<\/title\>/; print "$1"; }'`
+
+C_TEMP=`echo $C | cut -d':' -f 2`
+
+echo "$F/${C_TEMP//[[:blank:]]/}"
