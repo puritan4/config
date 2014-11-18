@@ -33,21 +33,21 @@ plugins=(git vi-mode zsh-syntax-highlighting yum tumx)
 
 source $ZSH/oh-my-zsh.sh
 
+bindkey -v
+
 # Customize to your needs...
-#export GOPATH=~/go
+export GOPATH=~/go
 export LYNX_CFG=~/lynx.cfg
-export GRAILS_HOME=/home/sleslie/dev/grails-2.3.0
+#export GRAILS_HOME=/home/sleslie/dev/grails-2.3.0
+export GRADLE_HOME=/home/sleslie/dev/gradle-1.10
 export SCALA_HOME=/home/sleslie/dev/scala-2.10.3
-export GROOVY_HOME=/opt/groovy-2.0.5
-export JAVA_HOME=/opt/ibm/java-i386-60
-export IWD_WORKSPACE_DIR=~/src/scaws_3.1.0.5
-export ZERO_HOME=${IWD_WORKSPACE_DIR}/build/cache/zerocli
-export PATH=$HOME/.rbenv/bin:$JAVA_HOME/jre/bin:$SCALA_HOME/bin:$GROOVY_HOME/bin:/home/sleslie/dev/apache-maven-3.0.5/bin:/home/sleslie/dev:$ZERO_HOME:/home/sleslie/bin:/usr/lib/lightdm/lightdm:/usr/local/lib:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/sleslie/dev/play-2.1.3/:$GRAILS_HOME/bin:
+#export GROOVY_HOME=/home/sleslie/.gvm/groovy/current
+export JAVA_HOME=/opt/ibm/java-x86_64-70
+export M2_HOME=/usr/local/maven
+
+export PATH=$HOME/bin:$HOME/.rbenv/bin:$JAVA_HOME/jre/bin:$M2_HOME/bin:/home/sleslie/dev:/usr/lib/lightdm/lightdm:/usr/local/lib:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/sleslie/dev/play-2.1.3/:$GRADLE_HOME/bin:$SCALA_HOME/bin:
 
 eval "$(rbenv init -)"
-
-# load up z for easy cli movement
-/home/sleslie/dev/z/z.sh
 
 alias ll="ls -alF"
 alias la="ls -A"
@@ -58,7 +58,7 @@ alias lt="ls -lart"
 alias ack="ack --follow --nobinary"
 
 # I've been using vim too long to unlearn some things
-alias vim="gvim -v"
+#alias vim="gvim -v"
 alias :e="gvim -v"
 alias :q="exit"
 
@@ -66,13 +66,11 @@ alias :q="exit"
 alias ranger="EDITOR=gvim ranger"
 
 # easy access to common dirs
-alias dcs="cd /home/sleslie/Documents"
+alias docs="cd /home/sleslie/Documents"
 alias down="cd /home/sleslie/Downloads"
 
 # easy access to code and projects
 alias src="cd /home/sleslie/src; ls"
-alias s32="cd /home/sleslie/src/scaws; ls"
-alias s35="cd /home/sleslie/src/scaws_3.1.0.5; ls"
 alias hve="cd ~/src/hve_images; ls"
 alias icon="cd /home/sleslie/src/icon; ls"
 alias blue="cd /home/sleslie/src/bluemixV2; ls"
@@ -92,14 +90,22 @@ alias gco="git checkout"
 # to make it easier to work with the bosh-lite test instance
 alias ssh_boshlite='bosh ssh --gateway_host 192.168.50.4 --gateway_user vagrant --gateway_identity_file $HOME/.vagrant.d/insecure_private_key'
 
-# this makes it easier to build gemsets with rbenv
-rgi() { gem install $@; rbenv rehash; rehash; }
-
 # make it easier to work with cloud_cli
 alias cloud-cli="~/dev/cloud_cli/bin/cloud-cli "
-alias gcf="~/src/bluemixV2/cli/out/go-cf "
+alias gcf="~/src/cfV2/cli/out/cf "
 
 gcode() { /home/sleslie/dev/getRMcode.sh $*; }
 
 # added this for tmux powerline
 PROMPT="$PROMPT"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+source ~/.fzf.zsh
+
+# make it easier to start ranger
+rg() {
+    if [ -z "$RANGER_LEVEL" ]
+    then
+        ranger
+    else
+        exit
+    fi
+}
