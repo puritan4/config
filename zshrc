@@ -63,7 +63,7 @@ alias :e="gvim -v"
 alias :q="exit"
 
 # Set the default editor in ranger to use gvim
-alias ranger="EDITOR=gvim ranger"
+alias ranger="W3MIMGDISPLAY_PATH=/usr/libexec/w3m/w3mimgdisplay PYTHONOPTIMIXE=2 EDITOR=gvim ranger"
 
 # easy access to common dirs
 alias docs="cd /home/sleslie/Documents"

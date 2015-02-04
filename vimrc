@@ -590,13 +590,15 @@
 "}}}
 
 " autocmd {{{
+	autocmd BufNewFile,BufRead *.md set filetype=markdown
+
   " go back to previous position of cursor if any
   autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \  exe 'normal! g`"zvzz' |
     \ endif
 
-  autocmd FileType js,scss,css autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+  autocmd FileType js,scss,css autocmd BufWritePre <buffer> :%s/\s\+$//e
   autocmd FileType css,scss setlocal foldmethod=marker foldmarker={,}
   autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
   autocmd FileType python setlocal foldmethod=indent
