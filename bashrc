@@ -106,7 +106,9 @@ fi
 #/usr/bin/setxkbmap -option "ctrl:nocaps"
 
 export JAVA_HOME=/opt/ibm/java-i386-60/
-export IWD_WORKSPACE_DIR=~/src/scaws
-export ZERO_HOME=${IWD_WORKSPACE_DIR}/build/cache/zerocli
-export PATH="$JAVA_HOME/jre/bin:${ZERO_HOME}:/home/sleslie/dev:$PATH"
+export PATH="$JAVA_HOME/jre/bin:/home/sleslie/bin:/home/sleslie/dev:$PATH"
 export PYTHON_CMD="/usr/bin/python"
+source ~/.fzf.bash
+
+#THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
+[[ -s "/home/sleslie/.gvm/bin/gvm-init.sh" ]] && source "/home/sleslie/.gvm/bin/gvm-init.sh"

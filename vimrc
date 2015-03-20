@@ -118,7 +118,7 @@
   endif
   set hidden                                          "allow buffer switching without saving
   set autoread                                        "auto reload if file saved externally
-  "set fileformats+=mac                                "add mac to auto-detection of file format line endings
+  set fileformats+=mac                                "add mac to auto-detection of file format line endings
   set nrformats-=octal                                "always assume decimal numbers
   set showcmd
   set tags=tags;/
@@ -291,6 +291,8 @@
   if count(s:settings.plugin_groups, 'ruby') "{{{
     NeoBundle 'tpope/vim-rails'
     NeoBundle 'tpope/vim-bundler'
+		NeoBundle 'tpope/vim-rake'
+		NeoBundle 'tpope/vim-projectionist'
   endif "}}}
   if count(s:settings.plugin_groups, 'python') "{{{
     NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} "{{{
@@ -448,7 +450,7 @@
     endif
 		if s:settings.autocomplete_method == 'neocomplete' "{{{
 			if has('lua')
-				NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.3.885'} "{{{
+				NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.4.16'} "{{{
 					let g:neocomplete#enable_at_startup=1
 					let g:neocomplete#data_directory='~/.vim/.cache/neocomplete'
 				"}}}
@@ -570,6 +572,10 @@
   " general
   nmap <leader>l :set list! list?<cr>
   nnoremap <BS> :set hlsearch! hlsearch?<cr>
+
+	" fix tab for neocomplete
+	" <TAB>: completion.
+	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
   map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
         \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
