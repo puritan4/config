@@ -1,6 +1,8 @@
 config
 ======
 
+[![Join the chat at https://gitter.im/puritan4/config](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/puritan4/config?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Config files for linux
 
 clone the repo and then create links to the specific files in your home.
