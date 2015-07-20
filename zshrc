@@ -90,6 +90,10 @@ alias gco="git checkout"
 # to make it easier to work with the bosh-lite test instance
 alias ssh_boshlite='bosh ssh --gateway_host 192.168.50.4 --gateway_user vagrant --gateway_identity_file $HOME/.vagrant.d/insecure_private_key'
 
+# try to make it easier to work with python2.7
+alias python=/usr/local/bin/python2.7
+alias pip=/usr/local/bin/pip2.7
+
 # make it easier to work with cloud_cli
 alias cloud-cli="~/dev/cloud_cli/bin/cloud-cli "
 alias gcf="~/src/cfV2/cli/out/cf "
