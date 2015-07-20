@@ -11,6 +11,8 @@
     finish
   endif
 
+  let s:cache_dir = get(g:dotvim_settings, 'cache_dir', '~/.vim/.cache')
+
   if g:dotvim_settings.version != 1
     echom 'The version number in your shim does not match the distribution version.  Please consult the README changelog section.'
     finish
@@ -20,11 +22,16 @@
   let s:settings = {}
   let s:settings.default_indent = 4
   let s:settings.max_column = 120
-  let s:settings.autocomplete_method = 'neocomplete'
+  let s:settings.autocomplete_method = 'neocomplcache'
   let s:settings.enable_cursorcolumn = 0
   "let s:settings.colorscheme = 'molokai'
   "let s:settings.colorscheme = 'Tomorrow-Night'
   let s:settings.colorscheme = 'jellybeans'
+  if has('lua')
+    let s:settings.autocomplete_method = 'neocomplete'
+  elseif filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
+    let s:settings.autocomplete_method = 'ycm'
+  endif
 
   if exists('g:dotvim_settings.plugin_groups')
     let s:settings.plugin_groups = g:dotvim_settings.plugin_groups
@@ -94,6 +101,18 @@
 "}}}
 
 " functions {{{
+  function! s:get_cache_dir(suffix) "{{{
+    return resolve(expand(s:cache_dir . '/' . a:suffix))
+  endfunction "}}}
+  function! Source(begin, end) "{{{
+    let lines = getline(a:begin, a:end)
+    for line in lines
+      execute line
+    endfor
+  endfunction "}}}
+  function! StripTrailingWhitespace() "{{{
+    call Preserve("%s/\\s\\+$//e")
+  endfunction "}}}
   function! EnsureExists(path) "{{{
     if !isdirectory(expand(a:path))
       call mkdir(expand(a:path))
@@ -182,18 +201,18 @@
     " persistent undo
     if exists('+undofile')
       set undofile
-      set undodir=~/.vim/.cache/undo
+      let &undodir = s:get_cache_dir('undo')
     endif
 
     " backups
     set backup
-    set backupdir=~/.vim/.cache/backup
+    let &backupdir = s:get_cache_dir('backup')
 
     " swap files
-    set directory=~/.vim/.cache/swap
+    let &directory = s:get_cache_dir('swap')
     set noswapfile
 
-    call EnsureExists('~/.vim/.cache')
+    call EnsureExists(s:cache_dir)
     call EnsureExists(&undodir)
     call EnsureExists(&backupdir)
     call EnsureExists(&directory)
@@ -276,16 +295,44 @@
     \ }
   endif "}}}
   if count(s:settings.plugin_groups, 'web') "{{{
+    NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
+    NeoBundleLazy 'cakebaker/scss-syntax.vim', {'autoload':{'filetypes':['scss','sass']}}
+    NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css','scss','sass']}}
     NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
     NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
+    NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
+    NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
+    NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
     NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
+    NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html','xml','xsl','xslt','xsd','css','sass','scss','less','mustache']}} "{{{
+      function! s:zen_html_tab()
+        let line = getline('.')
+        if match(line, '<.*>') < 0
+          return "\<c-y>,"
+        endif
+        return "\<c-y>n"
+      endfunction
+      autocmd FileType xml,xsl,xslt,xsd,css,sass,scss,less,mustache imap <buffer><tab> <c-y>,
+      autocmd FileType html imap <buffer><expr><tab> <sid>zen_html_tab()
+    "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'javascript') "{{{
+    NeoBundleLazy 'marijnh/tern_for_vim', {
+      \ 'autoload': { 'filetypes': ['javascript'] },
+      \ 'build': {
+        \ 'mac': 'npm install',
+        \ 'unix': 'npm install',
+        \ 'cygwin': 'npm install',
+        \ 'windows': 'npm install',
+      \ },
+    \ }
     NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
     NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
       nnoremap <leader>fjs :call JsBeautify()<cr>
     "}}}
+    NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}}
     NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
+    NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
     NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
     NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
   endif "}}}
@@ -320,9 +367,27 @@
       nnoremap <silent> <leader>gp :Git push<CR>
       nnoremap <silent> <leader>gw :Gwrite<CR>
       nnoremap <silent> <leader>gr :Gremove<CR>
-      autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
       autocmd BufReadPost fugitive://* set bufhidden=delete
     "}}}
+    NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'], 'autoload':{'commands':'Gitv'}} "{{{
+      nnoremap <silent> <leader>gv :Gitv<CR>
+      nnoremap <silent> <leader>gV :Gitv!<CR>
+    "}}}
+  endif "}}}
+  if count(s:settings.plugin_groups, 'autocomplete') "{{{
+    if s:settings.autocomplete_method == 'neocomplete' "{{{
+      NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.3.885'} "{{{
+        let g:neocomplete#enable_at_startup=1
+        let g:neocomplete#data_directory=s:get_cache_dir('neocomplete')
+      "}}}
+    endif "}}}
+    if s:settings.autocomplete_method == 'neocomplcache' "{{{
+      NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
+        let g:neocomplcache_enable_at_startup=1
+        let g:neocomplcache_temporary_dir=s:get_cache_dir('neocomplcache')
+        let g:neocomplcache_enable_fuzzy_completion=1
+      "}}}
+    endif "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'editing') "{{{
     NeoBundle 'tpope/vim-endwise'
@@ -373,7 +438,7 @@
               \ })
       endfunction
 
-      let g:unite_data_directory='~/.vim/.cache/unite'
+      let g:unite_data_directory=s:get_cache_dir('unite')
       let g:unite_enable_start_insert=1
       let g:unite_source_history_yank_enable=1
       let g:unite_source_rec_max_cache_files=5000
@@ -400,11 +465,11 @@
       nnoremap [unite] <nop>
 
       if s:is_windows
-        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec buffer file_mru bookmark<cr><c-u>
-        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec:! buffer file_mru bookmark<cr><c-u>
+        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec:!<cr><c-u>
       else
-        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async buffer file_mru bookmark<cr><c-u>
-        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async<cr><c-u>
+        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async:! buffer file_mru bookmark<cr><c-u>
+        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async:!<cr><c-u>
       endif
       nnoremap <silent> [unite]e :<C-u>Unite -buffer-name=recent file_mru<cr>
       nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
@@ -431,7 +496,7 @@
       nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<cr>
     "}}}
     NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
-      let g:junkfile#directory=expand("~/.vim/.cache/junk")
+      let g:junkfile#directory=s:get_cache_dir('junk')
       nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<cr>
     "}}}
   endif "}}}
@@ -459,14 +524,6 @@
     if exists('$TMUX')
       NeoBundle 'christoomey/vim-tmux-navigator'
     endif
-		if s:settings.autocomplete_method == 'neocomplete' "{{{
-			if has('lua')
-				NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.4.16'} "{{{
-					let g:neocomplete#enable_at_startup=1
-					let g:neocomplete#data_directory='~/.vim/.cache/neocomplete'
-				"}}}
-		endif
-    endif "}}}
     NeoBundle 'scrooloose/syntastic' "{{{
       let g:syntastic_error_symbol = '✗'
       let g:syntastic_style_error_symbol = '✠'
@@ -480,10 +537,15 @@
 
 " mappings {{{
   " formatting shortcuts
+  nmap <leader>f$ :call StripTrailingWhitespace()<CR>
   vmap <leader>s :sort<cr>
 
   " toggle paste
   map <F6> :set invpaste<CR>:set paste?<CR>
+
+  " for the neovim terminal
+  :tnoremap <Esc> <C-\><C-n>
+  :tnoremap <C-[> <C-\><C-n>
 
   " remap arrow keys
   nnoremap <left> :bprev<CR>
@@ -615,7 +677,7 @@
     \  exe 'normal! g`"zvzz' |
     \ endif
 
-  autocmd FileType js,scss,css autocmd BufWritePre <buffer> :%s/\s\+$//e
+  autocmd FileType js,scss,css autocmd BufWritePre <buffer> call StripTrailingWhitespace()
   autocmd FileType css,scss setlocal foldmethod=marker foldmarker={,}
   autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
   autocmd FileType python setlocal foldmethod=indent
@@ -634,8 +696,6 @@
   NeoBundle 'zeis/vim-kolor' "{{{
     let g:kolor_underlined=1
   "}}}
-
-  exec 'colorscheme '.s:settings.colorscheme
 "}}}
 
 " finish loading {{{
@@ -648,5 +708,7 @@
   call neobundle#end()
   filetype plugin indent on
   syntax enable
+  exec 'colorscheme '.s:settings.colorscheme
+
   NeoBundleCheck
- "}}}
+"}}}
