@@ -1,0 +1,23 @@
+[user]
+	name = Sam Leslie
+	email = sam.leslie@us.ibm.com
+[credential]
+	helper = cache
+[color]
+	ui = true
+	status = auto
+  branch = auto
+[core]
+	editor = /usr/local/bin/vim
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[merge]
+	tool = vimdiff
+[mergetool]
+	prompt = false
+[alias]
+  d = difftool
+  cb = !git branch | grep ^* | cut -d' ' -f2
+  sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)

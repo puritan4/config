@@ -3,10 +3,10 @@ let g:dotvim_settings.version = 1
 
 let g:dotvim_settings.plugin_groups_include = ['web','ruby','python', 'javascript']
 
-source ~/.vim/vimrc
+source ~/.vim/nvimrc
 
 " everything below here are customized for my system
 set t_ut=           " need this to deal with tmux and GNU screen
-"set t_Co=256       " sometimes need this to deal with correct colors in vim
+set t_Co=256
 "set nofoldenable    " disable folding
 

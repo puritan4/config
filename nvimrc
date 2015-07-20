@@ -543,6 +543,10 @@
   " toggle paste
   map <F6> :set invpaste<CR>:set paste?<CR>
 
+  " for the neovim terminal
+  :tnoremap <Esc> <C-\><C-n>
+  :tnoremap <C-[> <C-\><C-n>
+
   " remap arrow keys
   nnoremap <left> :bprev<CR>
   nnoremap <right> :bnext<CR>
