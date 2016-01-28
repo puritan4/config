@@ -20,7 +20,7 @@
 
   " initialize default settings
   let s:settings = {}
-  let s:settings.default_indent = 4
+  let s:settings.default_indent = 2
   let s:settings.max_column = 120
   let s:settings.autocomplete_method = 'neocomplcache'
   let s:settings.enable_cursorcolumn = 0
@@ -265,7 +265,7 @@
     endif
 
     if has('gui_gtk')
-      set gfn=Ubuntu\ Mono\ 12
+      set gfn=Source\ Code\ Pro\ 11
     endif
   else
     if $COLORTERM == 'gnome-terminal'
@@ -351,7 +351,11 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'go') "{{{
-    NeoBundleLazy 'jnwhiteh/vim-golang', {'autoload':{'filetypes':['go']}}
+    NeoBundleLazy 'fatih/vim-go', {'autoload':{'filetypes':['go']}} "{{{
+      let g:go_fmt_autosave=0
+      let g:go_fmt_command="goimports"
+      let g:go_fmt_fail_silently=1
+    "}}}
     NeoBundleLazy 'nsf/gocode', {'autoload': {'filetypes':['go']}, 'rtp': 'vim'}
   endif "}}}
   if count(s:settings.plugin_groups, 'scm') "{{{
@@ -445,6 +449,7 @@
       let g:unite_prompt='» '
 
       if executable('ag')
+        let g:unite_source_rec_async_command='ag --nocolor --nogroup --hidden -g ""'
         let g:unite_source_grep_command='ag'
         let g:unite_source_grep_default_opts='--nocolor --line-numbers --nogroup -S -C4'
         let g:unite_source_grep_recursive_opt=''

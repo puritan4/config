@@ -48,20 +48,22 @@ ZSH_THEME="ys"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git zsh-syntax-highlighting yum tmux)
+plugins=(git zsh-syntax-highlighting golang tmux)
 
 source $ZSH/oh-my-zsh.sh
 
 export TERM=xterm-256color
 
 # Customize to your needs...
-export GOPATH=~/go
+export GOPATH=~/src/gocode
+export GOROOT=~/dev/go
+#export GOROOT=~/dev/go1.5
 export LYNX_CFG=~/lynx.cfg
 export JAVA_HOME=/usr/lib/jvm/java-ibm-x86_64-71
 export M2_HOME=/usr/local/maven
 export GRADLE_HOME=/home/sleslie/dev/gradle-2.4
 
-export PATH=$HOME/bin:$HOME/.rbenv/bin:$JAVA_HOME/jre/bin:$GRADLE_HOME/bin:$M2_HOME/bin:/home/sleslie/dev:/usr/lib/lightdm:/usr/local/lib:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
+export PATH=$HOME/bin:$HOME/.rbenv/bin:$JAVA_HOME/jre/bin:$GRADLE_HOME/bin:$M2_HOME/bin:/home/sleslie/dev:/usr/lib/lightdm:/usr/local/lib:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$GOROOT/bin:$GOPATH/bin:
 
 eval "$(rbenv init -)"
 
@@ -87,7 +89,7 @@ alias down="cd /home/sleslie/Downloads"
 
 # easy access to code and projects
 alias src="cd /home/sleslie/src; ls"
-alias mps="cd /home/sleslie/src/marketplace-scripts; ls"
+alias map="cd /home/sleslie/src/nodecode; ls"
 
 # make it easier to work with git.  All these match the values in ~/.vim/vimrc
 alias gs="git status"
@@ -106,8 +108,6 @@ alias ssh_boshlite='bosh ssh --gateway_host 192.168.50.4 --gateway_user vagrant 
 
 # make it easier to work with cloud_cli
 alias cloud-cli="~/dev/cloud_cli/bin/cloud-cli "
-
-gcode() { /home/sleslie/dev/getRMcode.sh $*; }
 
 # added this for tmux powerline
 PROMPT="$PROMPT"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'

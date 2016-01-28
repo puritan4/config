@@ -8,7 +8,8 @@
 	status = auto
   branch = auto
 [core]
-	editor = /usr/local/bin/vim
+	editor = atom --wait
+	autocrlf = input
 [diff]
 	tool = vimdiff
 [difftool]
@@ -21,3 +22,5 @@
   d = difftool
   cb = !git branch | grep ^* | cut -d' ' -f2
   sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)
+[push]
+	default = simple

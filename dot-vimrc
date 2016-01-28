@@ -1,7 +1,7 @@
 let g:dotvim_settings = {}
 let g:dotvim_settings.version = 1
 
-let g:dotvim_settings.plugin_groups_include = ['web','ruby','python', 'javascript']
+let g:dotvim_settings.plugin_groups_include = ['web','ruby','go', 'javascript','misc']
 
 source ~/.vim/vimrc
 
